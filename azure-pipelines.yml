@@ -9,3 +9,7 @@ steps:
     ScriptPath: 'AzureResourceGroupDemo/Deploy-AzureResourceGroup.ps1'
     ScriptArguments: -ResourceGroupName 'demogroup' -ResourceGroupLocation 'centralus' -UploadArtifacts -ArtifactStagingDirectory '$(Build.StagingDirectory)' -StorageAccountName 'stage3a4176e058d34bb88cc'
     azurePowerShellVersion: LatestVersion
+- task: AzurePowerShell@5
+  inputs:
+    ScriptType: 'FilePath'
+    azurePowerShellVersion: 'LatestVersion'
