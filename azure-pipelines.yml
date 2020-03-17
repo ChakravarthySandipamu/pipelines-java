@@ -1,26 +1,11 @@
-trigger:
-- master
-
 pool:
-  vmImage: 'Ubuntu-16.04'
-
-variables:
-  imageName: 'pipelines-javascript-docker'
+  name: Hosted Windows 2019 with VS2019
+  demands: azureps
 
 steps:
-- task: Docker@2
-- task: Maven@3
+- task: AzurePowerShell@3
   inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
-  displayName: Build an image
-  inputs:
-    repository: $(imageName)
-    command: build
-    Dockerfile: app/Dockerfile
+    azureSubscription: 'demo-deploy-sp'
+    ScriptPath: 'AzureResourceGroupDemo/Deploy-AzureResourceGroup.ps1'
+    ScriptArguments: -ResourceGroupName 'demogroup' -ResourceGroupLocation 'centralus' -UploadArtifacts -ArtifactStagingDirectory '$(Build.StagingDirectory)' -StorageAccountName 'stage3a4176e058d34bb88cc'
+    azurePowerShellVersion: LatestVersion
